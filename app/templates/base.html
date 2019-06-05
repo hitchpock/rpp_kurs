@@ -1,0 +1,68 @@
+{% extends 'bootstrap/base.html' %}
+
+
+{% block title %}
+    {% if title %}{{ title }} - eJournal{% else %}Welcome to eJournal{% endif %}
+{% endblock %}
+
+
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" style="margin-left: 13%;" href="#">eJournal</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav" style="margin-left: 70%;">
+            {% if current_user.is_anonymous %}
+            <a class="btn btn-primary" href="{{ url_for('login') }}" role="button">Login</a>
+            {% else %}
+            <a class="nav-item nav-link" href="#">{{ current_user.login }}</a>
+            <a class="btn btn-primary" href="{{ url_for('logout') }}" role="button">Logout</a>
+            {% endif %}
+          </div>
+        </div>
+      </nav>
+    {% if current_user.role == 'admin' %}
+    <ul class="nav" style="margin-left: 13%;">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('add_student') }}">Добавление/удаление студента</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('add_teacher') }}">Добавление/удаление преподавателя</a>
+            </li>
+            <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('add_subject') }}">Добавление/удаление предмета</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('add_group') }}">Добавление/удаление группы</a>
+            </li>
+        </ul>
+    {% elif current_user.role == 'teacher' %}
+    <ul class="nav" style="margin-left: 13%;">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('put_mark') }}">Поставить оценку</a>
+            </li>
+        </ul>
+    {% elif current_user.role == 'student' %}
+    <ul class="nav" style="margin-left: 13%;">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('check_mark') }}">Просмотр успеваемости</a>
+            </li>
+        </ul>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-info" role="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        {% block app_content %}{% endblock %}
+    </div>
+{% endblock %}

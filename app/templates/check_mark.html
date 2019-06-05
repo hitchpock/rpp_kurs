@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+
+{% block app_content %}
+    <h1>Список сессий</h1>
+    <div id="accordion">
+        {% if session_lst != None %}
+        {% for session in session_lst %}
+        <div class="card">
+                <div class="card-header" id="headingOne">
+                  <h5 class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#{{session.number}}" aria-expanded="true" aria-controls="collapseOne">
+                      Сессия: {{ session.number }}
+                    </button> <br>
+                  </h5>
+                </div>
+                <div id="{{session.number}}" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div class="card-body">
+                                <table class="table">
+                                        <thead>
+                                          <tr>
+                                            <th scope="col">Предмет</th>
+                                            <th scope="col">Оценка</th>
+                                            <th scope="col">Тип экзамена</th>
+                                            <th scope="col">Преподаватель</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for note in session.lst %}
+                                            <tr>
+                                                <td>{{ note.sub_name }}</th>
+                                                <td>{{ note.grade }}</td>
+                                                <td>{{ note.ses_type }}</td>
+                                                <td>{{ note.teach_name }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                </table>
+                        </div>
+                </div>
+        {% endfor %}
+        {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+<p>Предмет &nbsp &nbsp Оценка &nbsp &nbsp Тип экзамена &nbsp &nbsp Преподаватель</p>
+                                {% for note in session.lst %}
+                                    <p>{{ note.sub_name }} &nbsp &nbsp {{ note.grade }} &nbsp &nbsp {{ note.ses_type }} &nbsp &nbsp {{ note.teach_name }}
+                                    </p>
+                                {% endfor %}
