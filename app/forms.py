@@ -1,12 +1,14 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField
+from wtforms import StringField, PasswordField, BooleanField, \
+                    SubmitField, SelectField
 from wtforms.validators import DataRequired, InputRequired
-from app.models import Group
 
 
-grade_list = [('Зачет', 'Зачет'), ('Незачет', 'Незачет'), ('3', '3'), ('4', '4'), ('5', '5')]
+grade_list = [('Зачет', 'Зачет'), ('Незачет', 'Незачет'), ('3', '3'),
+              ('4', '4'), ('5', '5')]
 type_list = [('Зачет', 'Зачет'), ('Экзамен', 'Экзамен')]
-ses_list = [('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5'), ('6', '6'), ('7', '7'), ('8', '8')]
+ses_list = [('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5'),
+            ('6', '6'), ('7', '7'), ('8', '8')]
 
 
 class LoginForm(FlaskForm):
@@ -64,8 +66,11 @@ class DeleteTeacher(FlaskForm):
 
 
 class PutMark(FlaskForm):
-    grade = SelectField('Grade', choices=grade_list, validators=[InputRequired()])
-    ses_type = SelectField('Type', choices=type_list, validators=[InputRequired()])
+    grade = SelectField('Grade', choices=grade_list,
+                        validators=[InputRequired()])
+    ses_type = SelectField('Type', choices=type_list,
+                           validators=[InputRequired()])
     student = SelectField('Student', validators=[InputRequired()])
-    num_sem = SelectField('Number', choices=ses_list, validators=[InputRequired()])
+    num_sem = SelectField('Number', choices=ses_list,
+                          validators=[InputRequired()])
     submit = SubmitField('Put')

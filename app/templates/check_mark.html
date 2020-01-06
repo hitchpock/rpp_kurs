@@ -28,12 +28,14 @@
                                         </thead>
                                         <tbody>
                                             {% for note in session.lst %}
+                                            {% if note.sub_name != None and note.teach_name != None %}
                                             <tr>
                                                 <td>{{ note.sub_name }}</th>
                                                 <td>{{ note.grade }}</td>
                                                 <td>{{ note.ses_type }}</td>
                                                 <td>{{ note.teach_name }}</td>
                                             </tr>
+                                            {% endif %}
                                             {% endfor %}
                                         </tbody>
                                 </table>
@@ -44,9 +46,3 @@
         </div>
     </div>
 {% endblock %}
-
-<p>Предмет &nbsp &nbsp Оценка &nbsp &nbsp Тип экзамена &nbsp &nbsp Преподаватель</p>
-                                {% for note in session.lst %}
-                                    <p>{{ note.sub_name }} &nbsp &nbsp {{ note.grade }} &nbsp &nbsp {{ note.ses_type }} &nbsp &nbsp {{ note.teach_name }}
-                                    </p>
-                                {% endfor %}

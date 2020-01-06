@@ -24,15 +24,17 @@ class User(db.Model, UserMixin):
     login = db.Column(db.String(255), index=True, unique=True)
     password_hash = db.Column(db.String(128))
     role = db.Column(db.String(255))
-    students = db.relationship('Student', backref='id', cascade='delete,all', uselist=False)
-    teachers = db.relationship('Teacher', backref='id', cascade='delete,all', uselist=False)
+    students = db.relationship('Student', backref='id', cascade='delete,all',
+                               uselist=False)
+    teachers = db.relationship('Teacher', backref='id', cascade='delete,all',
+                               uselist=False)
 
     def __repr__(self):
         return "<User {}>".format(self.login)
-    
+
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
-    
+
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
@@ -40,7 +42,8 @@ class User(db.Model, UserMixin):
 class Subject(db.Model):
     sub_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), index=True, unique=True)
-    teachers = db.relationship('Teacher', backref='subject_name', cascade='delete,all')
+    teachers = db.relationship('Teacher', backref='subject_name',
+                               cascade='delete,all')
     sessions = db.relationship('Session', backref='subject_name')
 
     def __repr__(self):
@@ -50,7 +53,8 @@ class Subject(db.Model):
 class Group(db.Model):
     group_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), index=True, unique=True)
-    students = db.relationship('Student', backref='group', cascade='delete,all')
+    students = db.relationship('Student', backref='group',
+                               cascade='delete,all')
 
     def __repr__(self):
         return "<Group {}>".format(self.name)
@@ -79,7 +83,8 @@ class Student(db.Model):
     name = db.Column(db.String(255), index=True)
     grp_name = db.Column(db.String(255), db.ForeignKey('group.name'))
     u_id = db.Column(db.String(255), index=True, unique=True)
-    sessions = db.relationship('Session', backref='student', cascade='delete,all')
+    sessions = db.relationship('Session', backref='student',
+                               cascade='delete,all')
 
     def __repr__(self):
         return "<Student {}>".format(self.name)
